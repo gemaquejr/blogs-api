@@ -20,4 +20,9 @@ const userController = async (req, res) => {
     return res.status(201).json({ token });
 };
 
-module.exports = { userController };
+const getAllUsers = async (req, res) => {
+    const allUsers = await User.findAll({ attributes: { exclude: ['password'] } });
+    return res.status(200).json(allUsers);
+};
+
+module.exports = { userController, getAllUsers };
