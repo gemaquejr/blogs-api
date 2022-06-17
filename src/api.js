@@ -18,6 +18,7 @@ app.post('/login', validate.validateLogin, userLogin.loginController);
 app.get('/user', tokenValidate.authToken, userValidate.getAllUsers);
 app.get('/user/:id', tokenValidate.authToken, userValidate.getUserId);
 app.post('/user', validateUser.validateUser, userValidate.userController);
+app.get('/categories', tokenValidate.authToken, categoryController.getAllCategories);
 app.post('/categories',
 tokenValidate.authToken, validateCategory.validateCategory, categoryController.categoryController);
 

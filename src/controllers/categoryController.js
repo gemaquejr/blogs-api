@@ -9,4 +9,9 @@ const categoryController = async (req, res) => {
     return res.status(201).json(addCategory);
 };
 
-module.exports = { categoryController };
+const getAllCategories = async (_req, res) => {
+    const allCategories = await Category.findAll();
+    return res.status(200).json(allCategories);
+};
+
+module.exports = { categoryController, getAllCategories };
