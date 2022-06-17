@@ -14,6 +14,7 @@ const app = express();
 app.use(express.json());
 app.post('/login', validate.validateLogin, userLogin.loginController);
 app.get('/user', tokenValidate.authToken, userValidate.getAllUsers);
+app.get('/user/:id', tokenValidate.authToken, userValidate.getUserId);
 app.post('/user', validateUser.validateUser, userValidate.userController);
 
 // É importante exportar a constante `app`,

@@ -20,9 +20,20 @@ const userController = async (req, res) => {
     return res.status(201).json({ token });
 };
 
-const getAllUsers = async (req, res) => {
+const getAllUsers = async (_req, res) => {
     const allUsers = await User.findAll({ attributes: { exclude: ['password'] } });
     return res.status(200).json(allUsers);
 };
 
-module.exports = { userController, getAllUsers };
+const getUserId = async (req, res) => {
+    const { id } = req.params;
+    const userId = await User.findOne({ where: { id }, attributes: { exclude: ['password'] } });
+
+    if (!userId) {
+        return res.status(404).json({ message: 'User does not exist' });
+    }
+
+    return res.status(200).json(userId);
+};
+
+module.exports = { userController, getAllUsers, getUserId };
