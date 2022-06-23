@@ -4,12 +4,12 @@ require('dotenv').config();
 const { JWT_SECRET } = process.env;
 
 const jwtConfig = {
-    expiresIn: '15m',
+    expiresIn: '30d',
     algorithm: 'HS256',
 };
 
-const generateJWT = (payload) => {
-const token = jwt.sign({ data: payload }, JWT_SECRET, jwtConfig);
+const generateJWT = (user) => {
+const token = jwt.sign({ user }, JWT_SECRET, jwtConfig);
 
 return token;
 };

@@ -1,4 +1,4 @@
-const { BlogPost, Category, PostCategory } = require('../database/models');
+const { BlogPost, Category, PostCategory, User } = require('../database/models');
 
 const BlogPostController = async (req, res) => {
     const { title, content, categoryIds } = req.body;
@@ -25,5 +25,17 @@ const BlogPostController = async (req, res) => {
         
         return res.status(201).json(newPost);
     };
-        
-    module.exports = { BlogPostController };
+
+    const getAllPosts = async (req, res) => {
+        // const { id } = req.user;
+        const allPosts = await BlogPost.findAll({ include: [{ model: User,
+as: 'user',
+         attributes: { exclude: ['password'] } },
+            { model: Category, as: 'categories',
+            },
+            ],
+            }); 
+        return res.status(200).json(allPosts);
+    };
+            
+    module.exports = { BlogPostController, getAllPosts };

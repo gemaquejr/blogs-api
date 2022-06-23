@@ -23,6 +23,8 @@ app.post('/user', validateUser.validateUser, userValidate.userController);
 app.get('/categories', tokenValidate.authToken, categoryController.getAllCategories);
 app.post('/categories',
 tokenValidate.authToken, validateCategory.validateCategory, categoryController.categoryController);
+app.get('/post',
+tokenValidate.authToken, blogPostController.getAllPosts);
 app.post('/post',
 tokenValidate.authToken, validateBlogPost.validateBlogPost, blogPostController.BlogPostController);
 
