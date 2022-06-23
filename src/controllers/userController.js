@@ -16,7 +16,7 @@ const userController = async (req, res) => {
         image,
     });
 
-    const token = generateJWT({ data: newUser });
+    const token = generateJWT({ id: newUser.id, displayName, email, image });
     return res.status(201).json({ token });
 };
 
