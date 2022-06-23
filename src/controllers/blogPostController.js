@@ -26,16 +26,28 @@ const BlogPostController = async (req, res) => {
         return res.status(201).json(newPost);
     };
 
-    const getAllPosts = async (req, res) => {
-        // const { id } = req.user;
-        const allPosts = await BlogPost.findAll({ include: [{ model: User,
-as: 'user',
-         attributes: { exclude: ['password'] } },
-            { model: Category, as: 'categories', through: { attributes: [] },
+    const getAllPosts = async (_req, res) => {
+        const allPosts = await BlogPost.findAll(
+            { include: [{ model: User, as: 'user', attributes: { exclude: ['password'] } },
+            { model: Category, as: 'categories', through: { attributes: [] } }],
             },
-            ],
-            }); 
+);
+
         return res.status(200).json(allPosts);
     };
+
+    const getPostId = async (_req, res) => {
+        const postId = await BlogPost.findOne(
+            { include: [{ model: User, as: 'user', attributes: { exclude: ['password'] } },
+            { model: Category, as: 'categories', through: { attributes: [] } }] },
+            );
+    
+        if (postId === null) {
+            return res.status(404).json({ message: 'Post does not exist' });
+        }
+
+        console.log(postId);    
+        return res.status(200).json(postId);
+    };
             
-    module.exports = { BlogPostController, getAllPosts };
+    module.exports = { BlogPostController, getAllPosts, getPostId };

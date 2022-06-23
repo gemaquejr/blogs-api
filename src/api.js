@@ -25,6 +25,8 @@ app.post('/categories',
 tokenValidate.authToken, validateCategory.validateCategory, categoryController.categoryController);
 app.get('/post',
 tokenValidate.authToken, blogPostController.getAllPosts);
+app.get('/post/:id',
+tokenValidate.authToken, blogPostController.getPostId);
 app.post('/post',
 tokenValidate.authToken, validateBlogPost.validateBlogPost, blogPostController.BlogPostController);
 
