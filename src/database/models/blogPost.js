@@ -17,7 +17,7 @@ const BlogPost = (sequelize, DataTypes) => {
             as: 'user',
             through: BlogPost,
             foreignKey: 'userId',
-            otherKey: 'BlogPostId',
+            otherKey: 'postId',
         });
     };
   
