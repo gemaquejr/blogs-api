@@ -37,12 +37,14 @@ const BlogPostController = async (req, res) => {
     };
 
     const getPostId = async (_req, res) => {
-        const postId = await BlogPost.findOne(
-            { include: [{ model: User, as: 'user', attributes: { exclude: ['password'] } },
+        const { id } = _req.params;
+        const postId = await BlogPost.findOne( 
+            { where: { id },
+include: [{ model: User, as: 'user', attributes: { exclude: ['password'] } },
             { model: Category, as: 'categories', through: { attributes: [] } }] },
             );
     
-        if (postId === null) {
+        if (!postId) {
             return res.status(404).json({ message: 'Post does not exist' });
         }
 
