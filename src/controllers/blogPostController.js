@@ -60,7 +60,6 @@ const BlogPostController = async (req, res) => {
             include: [{ model: User, as: 'user', attributes: { exclude: ['password'] } },
             { model: Category, as: 'categories', through: { attributes: [] } }] },
             );
-            console.log(updatePostById);
 
         if (userId !== updatePostById.userId) {
             return res.status(401).json({ message: 'Unauthorized user' });
@@ -70,5 +69,27 @@ const BlogPostController = async (req, res) => {
 
         return res.status(200).json(updatedPostById);
     };
+
+    const deletePostId = async (req, res) => {
+        const { id } = req.params;
+        const { id: userId } = req.user;
+        const postById = await BlogPost.findOne( 
+            { where: { id },
+            include: [{ model: User, as: 'user', attributes: { exclude: ['password'] } },
+            ] },
+            );
+
+        if (!postById) {
+            return res.status(404).json({ message: 'Post does not exist' });
+        }
+
+        if (userId !== postById.userId) {
+            return res.status(401).json({ message: 'Unauthorized user' });
+        }
+
+        await postById.destroy({ id });
+
+        return res.status(204).end();
+    };
             
-    module.exports = { BlogPostController, getAllPosts, getPostId, putPostId };
+    module.exports = { BlogPostController, getAllPosts, getPostId, putPostId, deletePostId };

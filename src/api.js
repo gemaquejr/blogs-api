@@ -31,6 +31,8 @@ app.post('/post',
 tokenValidate.authToken, validateBlogPost.validateBlogPost, blogPostController.BlogPostController);
 app.put('/post/:id',
 tokenValidate.authToken, validateBlogPost.validateBlogPost, blogPostController.putPostId);
+app.delete('/post/:id',
+tokenValidate.authToken, blogPostController.deletePostId);
 
 // É importante exportar a constante `app`,
 // para que possa ser utilizada pelo arquivo `src/server.js`
