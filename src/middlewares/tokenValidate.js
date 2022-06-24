@@ -14,7 +14,7 @@ const authToken = (req, res, next) => {
       if (!decoded) {
           return res.status(401).json({ message: 'Expired or invalid token' });
         }
-        console.log(decoded.user);
+        
        req.user = decoded.user;
 
         next();
