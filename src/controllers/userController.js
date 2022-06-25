@@ -36,4 +36,10 @@ const getUserId = async (req, res) => {
     return res.status(200).json(userId);
 };
 
-module.exports = { userController, getAllUsers, getUserId };
+const deleteMe = async (req, res) => {
+    const { id } = req.user;
+    await User.destroy({ where: { id } });
+    return res.status(204).end();
+};
+
+module.exports = { userController, getAllUsers, getUserId, deleteMe };
