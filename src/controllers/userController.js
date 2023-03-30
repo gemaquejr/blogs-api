@@ -1,45 +1,56 @@
-const generateJWT = require('../utils/generateJWT');
-const { User } = require('../database/models');
+const userServices = require('../services/userService');
 
-const userController = async (req, res) => {
+const userLogin = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    const isLoginOk = await userServices.loginValidation(email, password);
+
+    if (isLoginOk.token) return res.status(isLoginOk.status).json({ token: isLoginOk.token });
+
+    return res.status(isLoginOk.status).json({ message: isLoginOk.message });
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+const createUser = async (req, res) => {
+  try {
     const { displayName, email, password, image } = req.body;
-    const user = await User.findOne({ where: { email } });
 
-    if (user != null) {
-        return res.status(409).json({ message: 'User already registered' });
-    }
+    const data = await userServices
+      .createUserValidation(displayName, email, password, image);
 
-    const newUser = await User.create({
-        displayName,
-        email,
-        password,
-        image,
-    });
+    if (data.token) return res.status(201).json({ token: data.token });
 
-    const token = generateJWT({ id: newUser.id, displayName, email, image });
-    return res.status(201).json({ token });
+    return res.status(data.status).json({ message: data.message });
+  } catch (error) {
+    console.log(error.message);
+  }
 };
 
-const getAllUsers = async (_req, res) => {
-    const allUsers = await User.findAll({ attributes: { exclude: ['password'] } });
-    return res.status(200).json(allUsers);
+const getUsers = async (_req, res) => {
+  const users = await userServices.getUsers();
+  return res.status(users.status).json(users.users);
 };
 
-const getUserId = async (req, res) => {
+const userGetById = async (req, res) => {
+  try {
     const { id } = req.params;
-    const userId = await User.findOne({ where: { id }, attributes: { exclude: ['password'] } });
+    const userId = await userServices.userGetById(id);
 
-    if (!userId) {
-        return res.status(404).json({ message: 'User does not exist' });
-    }
+    if (userId.status === 200) return res.status(userId.status).json(userId.user);
 
-    return res.status(200).json(userId);
+    return res.status(userId.status).json({ message: userId.message });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const deleteMe = async (req, res) => {
-    const { id } = req.user;
-    await User.destroy({ where: { id } });
-    return res.status(204).end();
+  const { id } = req.authUser;
+  const statusNumber = await userServices.deleteMe(id);
+  return res.status(statusNumber).end();
 };
 
-module.exports = { userController, getAllUsers, getUserId, deleteMe };
+module.exports = { userLogin, createUser, getUsers, userGetById, deleteMe };
