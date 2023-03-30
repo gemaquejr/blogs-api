@@ -1,40 +1,27 @@
 const express = require('express');
 
-const userLogin = require('./controllers/loginController');
-const userValidate = require('./controllers/userController');
-const categoryController = require('./controllers/categoryController');
-const blogPostController = require('./controllers/blogPostController');
-
-const validate = require('./middlewares/validateLogin');
-const validateUser = require('./middlewares/validateUser');
-const tokenValidate = require('./middlewares/tokenValidate');
-const validateCategory = require('./middlewares/validateCategory');
-const validateBlogPost = require('./middlewares/validateBlogPost');
-
-// ...
+const userController = require('./controllers/userController');
+const categoriesController = require('./controllers/categoriesController');
+const blogPostController = require('./controllers/postController');
+const { auth } = require('./middlewares/auth');
 
 const app = express();
 
 app.use(express.json());
-app.post('/login', validate.validateLogin, userLogin.loginController);
-app.get('/user', tokenValidate.authToken, userValidate.getAllUsers);
-app.get('/user/:id', tokenValidate.authToken, userValidate.getUserId);
-app.post('/user', validateUser.validateUser, userValidate.userController);
-app.delete('/user/me',
-tokenValidate.authToken, userValidate.deleteMe);
-app.get('/categories', tokenValidate.authToken, categoryController.getAllCategories);
-app.post('/categories',
-tokenValidate.authToken, validateCategory.validateCategory, categoryController.categoryController);
-app.get('/post',
-tokenValidate.authToken, blogPostController.getAllPosts);
-app.get('/post/:id',
-tokenValidate.authToken, blogPostController.getPostId);
-app.post('/post',
-tokenValidate.authToken, validateBlogPost.validateBlogPost, blogPostController.BlogPostController);
-app.put('/post/:id',
-tokenValidate.authToken, validateBlogPost.validateBlogPost, blogPostController.putPostId);
-app.delete('/post/:id',
-tokenValidate.authToken, blogPostController.deletePostId);
+
+app.post('/login', userController.userLogin);
+app.post('/categories', auth, categoriesController.createCategory);
+app.get('/categories', auth, categoriesController.getCategories);
+app.post('/post', auth, blogPostController.addBlog);
+app.get('/post', auth, blogPostController.getPosts);
+app.get('/post/search', auth, blogPostController.postSearch);
+app.get('/post/:id', auth, blogPostController.getById);
+app.put('/post/:id', auth, blogPostController.updateBlog);
+app.delete('/post/:id', auth, blogPostController.deleteBlog);
+app.post('/user', userController.createUser);
+app.get('/user', auth, userController.getUsers);
+app.get('/user/:id', auth, userController.userGetById);
+app.delete('/user/me', auth, userController.deleteMe);
 
 // É importante exportar a constante `app`,
 // para que possa ser utilizada pelo arquivo `src/server.js`
