@@ -6,8 +6,6 @@ Essa aplicação é uma API RESTful de produção de conteúdo para um blog em M
 
 Aplicação que consiste em desenvolver uma API RESTful, utilizando o ORM Sequelize onde é possível criar e popular tabelas, cadastrar, visualizar, pesquisar, editar e excluir informações, seguindo a arquitetura MSC.
 
-O projeto foi para praticar a construção de API's RESTful em CRUD, utilizando endpoints para ler e escrever arquivos em MySQL, além do framework Mocha e das bibliotecas Chai e Sinon.JS para criar os testes unitários.
-
 ## 🚀 Tecnologia
 
 - ⚡ Docker é uma plataforma open source que facilita a criação e administração de ambientes isolados dentro de um container.
@@ -17,12 +15,6 @@ O projeto foi para praticar a construção de API's RESTful em CRUD, utilizando 
 - ⚡ MySQL é um sistema de gerenciamento de banco de dados, que utiliza a linguagem SQL como interface.
 
 - ⚡ MySQL Workbench é uma ferramenta de design de banco de dados visual que integra desenvolvimento SQL, administração, design de banco de dados, criação     e manutenção em um único ambiente de desenvolvimento integrado para o sistema de banco de dados MySQL.
-
-- ⚡ Mocha é um Framework de teste JavaScript para programas Node.js.
-
-- ⚡ Chai é uma biblioteca de afirmação BDD/TDD para Node e para o navegador, que pode ser equiparada com qualquer framework de testes de JavaScript.
-
-- ⚡ Sinon é uma biblioteca que fornece diversas funcionalidades (como mocks, spies e stubs) que facilitam os desenvolvimentos de testes no JavaScript.
 
 ## ✋🏻 Pré-requisitos
 
@@ -37,12 +29,6 @@ O projeto foi para praticar a construção de API's RESTful em CRUD, utilizando 
 - [MySQL](https://www.mysql.com/): Sistema de gerenciamento de banco de dados (SGBD) relacional, ou seja, que utiliza a linguagem SQL como interface.
 
 - [MySQL Workbench](https://www.mysql.com/products/workbench/): MySQL é uma ferramenta de design de banco de dados visual que integra desenvolvimento       SQL, administração, design de banco de dados, criação e manutenção em um único ambiente de desenvolvimento integrado para o sistema de banco de dados     MySQL.
-
-- [Mocha](https://mochajs.org/): Mocha é um framework Javascript que roda em aplicações Node.js e no browser para realizar testes assíncronos de uma       maneira simples e fácil.
-
-- [Chai](https://www.chaijs.com/): Chai é uma biblioteca de afirmação BDD/TDD para Node e para o navegador, que pode ser equiparada com qualquer           framework de testes de JavaScript.
-
-- [Sinon](https://sinonjs.org/): Sinon é uma biblioteca que fornece diversas funcionalidades (como mocks, spies e stubs) que facilitam os                   desenvolvimentos de testes no JavaScript.
 
 ## :hammer_and_wrench: Antes de iniciar o projeto.
 
