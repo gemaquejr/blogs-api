@@ -1,16 +1,12 @@
-const generateJWT = require('../utils/generateJWT');
-const { User } = require('../database/models');
+const loginServices = require('../services/loginService');
 
-const loginController = async (req, res) => {
-    const { email, password } = req.body;
-    const user = await User.findOne({ where: { email } });
+module.exports = {
 
-    if (!user || user.password !== password) {
-        return res.status(400).json({ message: 'Invalid fields' });
-    }
+  login: (req, res) => {
+    const { email } = req.body;
 
-    const token = generateJWT(user);
+    const token = loginServices.login(email);
+
     return res.status(200).json({ token });
+  },
 };
-
-module.exports = { loginController };
